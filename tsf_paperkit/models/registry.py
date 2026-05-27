@@ -11,9 +11,9 @@ from tsf_paperkit.models.linear import LinearForecastModel
 from tsf_paperkit.models.naive import NaiveLastValue
 
 MODEL_CLASSES = {
-    "naive": NaiveLastValue,
-    "linear": LinearForecastModel,
-    "dlinear": DLinearForecastModel,
+    "builtin.naive": NaiveLastValue,
+    "builtin.linear": LinearForecastModel,
+    "builtin.dlinear": DLinearForecastModel,
 }
 
 
@@ -33,21 +33,23 @@ def model_recipe(name: str, path: str | Path = "configs/model_registry.yaml") ->
     for recipe in load_model_registry(path):
         if recipe.get("name") == name:
             return recipe
-    if name in MODEL_CLASSES:
-        return {"name": name, "kind": "builtin", "provider": "tsf-paperkit", "revision": "local", "expected_files": [], "cache_key": None, "license_note": "project license", "auth_required": False}
+    legacy_adapter = f"builtin.{name}"
+    if legacy_adapter in MODEL_CLASSES:
+        return {"name": name, "kind": "builtin", "provider": "tsf-paperkit", "revision": "local", "expected_files": [], "cache_key": None, "license_note": "project license", "auth_required": False, "adapter": legacy_adapter}
     raise KeyError(f"Unknown model: {name}")
 
 
-def build_model(name: str, seq_len: int, pred_len: int, channels: int, device: str = "cpu", params: dict[str, Any] | None = None):
+def build_model(name: str, seq_len: int, pred_len: int, channels: int, device: str = "cpu", params: dict[str, Any] | None = None, registry_path: str | Path = "configs/model_registry.yaml"):
     params = params or {}
-    if name == "naive":
-        return NaiveLastValue()
-    if name == "linear":
-        return LinearForecastModel(seq_len, pred_len, channels, device=device)
-    if name == "dlinear":
-        return DLinearForecastModel(seq_len, pred_len, channels, device=device, **params)
-    raise KeyError(f"Model {name!r} is not implemented in MVP. Add an adapter recipe first.")
+    recipe = model_recipe(name, registry_path)
+    adapter = recipe.get("adapter")
+    model_cls = MODEL_CLASSES.get(adapter)
+    if model_cls is None:
+        raise KeyError(f"Model {name!r} uses adapter {adapter!r}, which is not implemented in the MVP registry.")
+    if adapter == "builtin.naive":
+        return model_cls()
+    return model_cls(seq_len, pred_len, channels, device=device, **params)
 
 
-def prepare_model(name: str, cache_dir: str | None = None, registry_path: str | Path = "configs/model_registry.yaml") -> dict[str, Any]:
-    return prepare_model_asset(model_recipe(name, registry_path), cache_dir=cache_dir)
+def prepare_model(name: str, cache_dir: str | None = None, registry_path: str | Path = "configs/model_registry.yaml", config_cache_dir: str | None = None) -> dict[str, Any]:
+    return prepare_model_asset(model_recipe(name, registry_path), cache_dir=cache_dir, config_cache_dir=config_cache_dir)

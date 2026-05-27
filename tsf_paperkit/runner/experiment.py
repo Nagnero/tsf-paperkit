@@ -33,6 +33,8 @@ def run_experiment(config: dict[str, Any]) -> Path:
     exp = config.get("experiment", {})
     data_cfg = config["data"]
     train_cfg = config.get("training", {})
+    registry_cfg = config.get("registries", {})
+    cache_cfg = config.get("cache", {})
     seed = int(exp.get("seed", train_cfg.get("seed", 42)))
     set_seed(seed)
     device = resolve_device(train_cfg.get("device", "auto"))
@@ -46,8 +48,10 @@ def run_experiment(config: dict[str, Any]) -> Path:
     rows = []
     for model_cfg in config.get("models", []):
         name = model_cfg["name"]
-        prepare_model(name)
-        model = build_model(name, int(data_cfg["seq_len"]), int(data_cfg["pred_len"]), channels, device=device, params=model_cfg.get("params", {}))
+        registry_path = model_cfg.get("registry") or registry_cfg.get("models", "configs/model_registry.yaml")
+        model_cache_dir = model_cfg.get("cache_dir") or cache_cfg.get("models")
+        prepare_model(name, registry_path=registry_path, config_cache_dir=model_cache_dir)
+        model = build_model(name, int(data_cfg["seq_len"]), int(data_cfg["pred_len"]), channels, device=device, params=model_cfg.get("params", {}), registry_path=registry_path)
         t0 = time.perf_counter()
         model.fit(loaders["train"], loaders.get("val"), {**train_cfg, **model_cfg.get("params", {})})
         train_time = time.perf_counter() - t0

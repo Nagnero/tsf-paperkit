@@ -49,7 +49,8 @@ def doctor_report() -> dict[str, Any]:
         except OSError as exc:
             checks.append(entry(f"cache_writable:{p}", "fail", str(exc)))
     cuda = torch.cuda.is_available()
-    checks.append(entry("cuda_available", "pass" if cuda else "warn", str(cuda)))
+    checks.append(entry("cuda_available", "pass" if cuda else "skipped", str(cuda)))
+    checks.append(entry("cuda_smoke", "pass" if cuda else "skipped", "run scripts/smoke_cuda.py for GPU smoke" if cuda else "CUDA unavailable; GPU smoke intentionally skipped"))
     status = "fail" if any(c["status"] == "fail" for c in checks) else "warn" if any(c["status"] == "warn" for c in checks) else "pass"
     return {
         "status": status,

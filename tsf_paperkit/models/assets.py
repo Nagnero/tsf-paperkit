@@ -9,8 +9,8 @@ def resolve_model_cache(cli_cache_dir: str | None = None, config_cache_dir: str 
     return Path(cli_cache_dir or config_cache_dir or os.getenv("TSF_PAPERKIT_MODEL_CACHE") or ".cache/tsf-paperkit/models")
 
 
-def prepare_model_asset(recipe: dict[str, Any], cache_dir: str | None = None) -> dict[str, Any]:
-    cache = resolve_model_cache(cache_dir)
+def prepare_model_asset(recipe: dict[str, Any], cache_dir: str | None = None, config_cache_dir: str | None = None) -> dict[str, Any]:
+    cache = resolve_model_cache(cache_dir, config_cache_dir)
     if recipe.get("kind") == "builtin":
         return {"status": "ready", "model": recipe["name"], "cache_path": None, "message": "built-in model requires no external assets"}
     if recipe.get("auth_required"):

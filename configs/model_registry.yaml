@@ -7,7 +7,7 @@ models:
     cache_key: null
     license_note: project license
     auth_required: false
-    adapter: tsf_paperkit.models.naive
+    adapter: builtin.naive
   - name: linear
     kind: builtin
     provider: tsf-paperkit
@@ -16,7 +16,7 @@ models:
     cache_key: null
     license_note: project license
     auth_required: false
-    adapter: tsf_paperkit.models.linear
+    adapter: builtin.linear
   - name: dlinear
     kind: builtin
     provider: tsf-paperkit
@@ -25,7 +25,7 @@ models:
     cache_key: null
     license_note: project license
     auth_required: false
-    adapter: tsf_paperkit.models.dlinear
+    adapter: builtin.dlinear
   - name: timesfm_future
     kind: future-adapter
     provider: external
