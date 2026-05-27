@@ -1,0 +1,11 @@
+approved_sources:
+  - id: toy_series_local
+    dataset: toy_series
+    source_status: approved
+    source_type: local
+    source_url: examples/toy_series.csv
+    reviewer: tsf-paperkit maintainers
+    reviewed_at: 2026-05-27
+    license_note: bundled demo data
+    citation_note: not applicable
+    checksum_waiver: bundled tiny fixture tracked in repository

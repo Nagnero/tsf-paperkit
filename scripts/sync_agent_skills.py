@@ -14,7 +14,7 @@ TARGETS = [ROOT / ".codex" / "skills", ROOT / ".claude" / "skills"]
 SKILLS = ["tsf-doctor", "tsf-data", "tsf-models", "tsf-run", "tsf-check", "tsf-report"]
 APPROVED = {
     "tsf-doctor": ["doctor", "smoke_cuda.py", "sync_agent_skills.py", "run --config"],
-    "tsf-data": ["data list", "data prepare", "dataset_registry.yaml"],
+    "tsf-data": ["data list", "data inspect", "data prepare", "dataset_registry.yaml"],
     "tsf-models": ["model list", "model prepare", "model_registry.yaml"],
     "tsf-run": ["run --config", "ablate --config"],
     "tsf-check": ["check --config"],

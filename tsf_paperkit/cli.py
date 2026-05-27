@@ -9,7 +9,7 @@ import yaml
 
 from tsf_paperkit.ablation.manager import run_ablations
 from tsf_paperkit.checks.fairness import as_text, check_config_file, doctor_report
-from tsf_paperkit.data.registry import load_dataset_registry, prepare_dataset
+from tsf_paperkit.data.registry import dataset_recipe, list_dataset_recipes, prepare_dataset
 from tsf_paperkit.models.registry import list_models, prepare_model
 from tsf_paperkit.reporting.table import write_table
 from tsf_paperkit.runner.experiment import load_config, run_experiment
@@ -50,13 +50,64 @@ def doctor(format: str = typer.Option("text", "--format")):
 
 
 @data_app.command("list")
-def data_list(registry: Path = typer.Option(Path("configs/dataset_registry.yaml"), "--registry")):
-    typer.echo(yaml.safe_dump({"datasets": load_dataset_registry(registry)}, sort_keys=False))
+def data_list(
+    registry: Path = typer.Option(Path("configs/dataset_registry.yaml"), "--registry"),
+    family: Optional[str] = typer.Option(None, "--family"),
+    status: Optional[str] = typer.Option(None, "--status"),
+    json_output: bool = typer.Option(False, "--json"),
+):
+    recipes = list_dataset_recipes(registry, family=family, status=status)
+    payload = {"datasets": recipes}
+    typer.echo(json.dumps(payload, indent=2) if json_output else yaml.safe_dump(payload, sort_keys=False))
+
+
+@data_app.command("inspect")
+def data_inspect(
+    dataset: str = typer.Option(..., "--dataset"),
+    registry: Path = typer.Option(Path("configs/dataset_registry.yaml"), "--registry"),
+    json_output: bool = typer.Option(False, "--json"),
+):
+    recipe = dataset_recipe(dataset, registry)
+    payload = {"dataset": recipe}
+    typer.echo(json.dumps(payload, indent=2) if json_output else yaml.safe_dump(payload, sort_keys=False))
 
 
 @data_app.command("prepare")
-def data_prepare(dataset: str = typer.Option(..., "--dataset"), cache_dir: Optional[str] = typer.Option(None, "--cache-dir"), registry: Path = typer.Option(Path("configs/dataset_registry.yaml"), "--registry")):
-    typer.echo(json.dumps(prepare_dataset(dataset, cache_dir=cache_dir, registry_path=registry), indent=2))
+def data_prepare(
+    dataset: Optional[str] = typer.Option(None, "--dataset"),
+    family: Optional[str] = typer.Option(None, "--family"),
+    cache_dir: Optional[str] = typer.Option(None, "--cache-dir"),
+    registry: Path = typer.Option(Path("configs/dataset_registry.yaml"), "--registry"),
+    force: bool = typer.Option(False, "--force"),
+    confirm_family: bool = typer.Option(False, "--confirm-family"),
+    json_output: bool = typer.Option(False, "--json"),
+):
+    if not dataset and not family:
+        raise typer.BadParameter("select exactly one dataset with --dataset, or explicitly opt into a family with --family")
+    if dataset and family:
+        raise typer.BadParameter("use either --dataset or --family, not both")
+    if dataset:
+        result = prepare_dataset(dataset, cache_dir=cache_dir, registry_path=registry, force=force)
+        typer.echo(json.dumps(result, indent=2) if json_output else yaml.safe_dump(result, sort_keys=False))
+        return
+
+    recipes = list_dataset_recipes(registry, family=family)
+    if not recipes:
+        raise typer.BadParameter(f"unknown dataset family: {family}")
+    selected = [r for r in recipes if r.get("status") == "supported"]
+    skipped = [r for r in recipes if r.get("status") != "supported"]
+    results = []
+    if confirm_family:
+        results = [prepare_dataset(r["name"], cache_dir=cache_dir, registry_path=registry, force=force) for r in selected]
+    payload = {
+        "status": "ready" if results and all(r["status"] == "ready" for r in results) else "preview",
+        "family": family,
+        "requires_confirmation": bool(selected) and not confirm_family,
+        "preview": [r["name"] for r in recipes],
+        "prepared": results,
+        "skipped": [{"dataset": r["name"], "status": r.get("status"), "reason": r.get("skip_reason") or r.get("blocked_reason")} for r in skipped],
+    }
+    typer.echo(json.dumps(payload, indent=2) if json_output else yaml.safe_dump(payload, sort_keys=False))
 
 
 @model_app.command("list")

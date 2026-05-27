@@ -4,16 +4,20 @@ description: Use when the user wants to find, list, download, cache, verify, or 
 ---
 # tsf-data
 
-Goal: prepare datasets from registry recipes without committing data to git.
+Goal: help users choose and prepare only the dataset recipes they need, while keeping third-party data out of git.
 
 Workflow:
-1. Inspect `configs/dataset_registry.yaml`.
-2. List recipes with `python -m tsf_paperkit.cli data list`.
-3. Prepare a selected recipe with `python -m tsf_paperkit.cli data prepare --dataset <name>`.
-4. Report local path, metadata path, source URL, license note, checksum, and auth status.
-5. If a source is placeholder/restricted, explain the skip or required user access.
+1. Inspect available recipes with `python -m tsf_paperkit.cli data list --json`.
+2. Narrow by intent when useful, e.g. `python -m tsf_paperkit.cli data list --family ETT --json`.
+3. Inspect a candidate with `python -m tsf_paperkit.cli data inspect --dataset <name> --json`.
+4. Prepare only the selected recipe with `python -m tsf_paperkit.cli data prepare --dataset <name> --json`.
+5. Report `prepared_files.primary_csv`, `metadata_path`, `config_patch`, source, license/citation notes, and cache path.
+6. If the recipe is placeholder/restricted/blocked, report the skip or blocked reason instead of inventing a download path.
+7. Run a smoke experiment only when the recipe is `smokeable: true` and the user asked to run one.
 
 Rules:
-- Never commit downloaded datasets.
+- Never download the whole registry by default.
+- Never commit downloaded datasets, caches, generated results, checkpoints, weights, or secrets.
 - Use `.cache/tsf-paperkit/datasets` unless config, env, or `--cache-dir` overrides.
-- Do not bypass license or authentication gates.
+- Do not bypass source-ledger, license, authentication, or placeholder gates.
+- Skills should call CLI commands; do not duplicate deterministic downloader logic in the skill text.

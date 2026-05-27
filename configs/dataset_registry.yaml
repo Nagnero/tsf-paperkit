@@ -1,27 +1,372 @@
 datasets:
   - name: toy_series
+    aliases: [toy, local_toy]
+    family: toy
+    status: supported
+    source_status: approved
+    source_approval_id: toy_series_local
+    source_type: local
     source_url: examples/toy_series.csv
     upstream_name: local-toy
     license_note: bundled demo data
     citation_note: not applicable
+    provenance_note: Generated toy data committed for smoke tests only.
     checksum: null
     format: csv
     timestamp_col: date
-    target_columns: [value]
+    target_cols: [value]
     cache_key: toy_series
+    cache_subdir: toy_series
+    expected_files: [toy_series.csv]
+    prepared_files:
+      primary_csv: toy_series.csv
     split_hint: null
+    size_note: tiny bundled fixture
+    smokeable: true
+    tags: [demo, smoke]
     auth_required: false
     placeholder: false
+
+  - name: ETTh1
+    aliases: [ett_h1, ETT-hourly-1]
+    family: ETT
+    status: placeholder
+    source_status: pending
+    source_type: hf_file
+    source_ref: thuml/Time-Series-Library/ETT-small/ETTh1.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/ETT-small
+    upstream_name: THUML Time-Series-Library ETT-small
+    license_note: Review upstream dataset card/repository terms before publication.
+    citation_note: Cite original ETT/Time-Series-Library source when used.
+    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_cols: [OT]
+    cache_key: ETTh1
+    cache_subdir: ETT/ETTh1
+    expected_files: [ETTh1.csv]
+    prepared_files:
+      primary_csv: ETTh1.csv
+    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
+    size_note: small CSV candidate
+    smokeable: false
+    skip_reason: source ledger pending; no automatic download until approved
+    auth_required: false
+    placeholder: true
+    tags: [long-term, ett]
+
+  - name: ETTh2
+    aliases: [ett_h2, ETT-hourly-2]
+    family: ETT
+    status: placeholder
+    source_status: pending
+    source_type: hf_file
+    source_ref: thuml/Time-Series-Library/ETT-small/ETTh2.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/ETT-small
+    upstream_name: THUML Time-Series-Library ETT-small
+    license_note: Review upstream dataset card/repository terms before publication.
+    citation_note: Cite original ETT/Time-Series-Library source when used.
+    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_cols: [OT]
+    cache_key: ETTh2
+    cache_subdir: ETT/ETTh2
+    expected_files: [ETTh2.csv]
+    prepared_files:
+      primary_csv: ETTh2.csv
+    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
+    size_note: small CSV candidate
+    smokeable: false
+    skip_reason: source ledger pending; no automatic download until approved
+    auth_required: false
+    placeholder: true
+    tags: [long-term, ett]
+
+  - name: ETTm1
+    aliases: [ett_m1, ETT-minute-1]
+    family: ETT
+    status: placeholder
+    source_status: pending
+    source_type: hf_file
+    source_ref: thuml/Time-Series-Library/ETT-small/ETTm1.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/ETT-small
+    upstream_name: THUML Time-Series-Library ETT-small
+    license_note: Review upstream dataset card/repository terms before publication.
+    citation_note: Cite original ETT/Time-Series-Library source when used.
+    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_cols: [OT]
+    cache_key: ETTm1
+    cache_subdir: ETT/ETTm1
+    expected_files: [ETTm1.csv]
+    prepared_files:
+      primary_csv: ETTm1.csv
+    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
+    size_note: medium CSV candidate
+    smokeable: false
+    skip_reason: source ledger pending; no automatic download until approved
+    auth_required: false
+    placeholder: true
+    tags: [long-term, ett]
+
+  - name: ETTm2
+    aliases: [ett_m2, ETT-minute-2]
+    family: ETT
+    status: placeholder
+    source_status: pending
+    source_type: hf_file
+    source_ref: thuml/Time-Series-Library/ETT-small/ETTm2.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/ETT-small
+    upstream_name: THUML Time-Series-Library ETT-small
+    license_note: Review upstream dataset card/repository terms before publication.
+    citation_note: Cite original ETT/Time-Series-Library source when used.
+    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_cols: [OT]
+    cache_key: ETTm2
+    cache_subdir: ETT/ETTm2
+    expected_files: [ETTm2.csv]
+    prepared_files:
+      primary_csv: ETTm2.csv
+    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
+    size_note: medium CSV candidate
+    smokeable: false
+    skip_reason: source ledger pending; no automatic download until approved
+    auth_required: false
+    placeholder: true
+    tags: [long-term, ett]
+
+  - name: electricity
+    aliases: [ECL, electric_load]
+    family: common-long-term
+    status: placeholder
+    source_status: pending
+    source_type: hf_file
+    source_ref: thuml/Time-Series-Library/electricity/electricity.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/electricity
+    upstream_name: THUML Time-Series-Library electricity
+    license_note: Review upstream dataset card/repository terms before publication.
+    citation_note: Cite original Electricity/ECL source when used.
+    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_cols: []
+    cache_key: electricity
+    cache_subdir: common-long-term/electricity
+    expected_files: [electricity.csv]
+    prepared_files:
+      primary_csv: electricity.csv
+    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
+    size_note: larger multivariate CSV candidate
+    smokeable: false
+    skip_reason: source ledger pending; no automatic download until approved
+    auth_required: false
+    placeholder: true
+    tags: [long-term, multivariate]
+
+  - name: weather
+    aliases: [weather_ts]
+    family: common-long-term
+    status: placeholder
+    source_status: pending
+    source_type: hf_file
+    source_ref: thuml/Time-Series-Library/weather/weather.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/weather
+    upstream_name: THUML Time-Series-Library weather
+    license_note: Review upstream dataset card/repository terms before publication.
+    citation_note: Cite original Weather source when used.
+    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_cols: []
+    cache_key: weather
+    cache_subdir: common-long-term/weather
+    expected_files: [weather.csv]
+    prepared_files:
+      primary_csv: weather.csv
+    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
+    size_note: moderate multivariate CSV candidate
+    smokeable: false
+    skip_reason: source ledger pending; no automatic download until approved
+    auth_required: false
+    placeholder: true
+    tags: [long-term, multivariate]
+
+  - name: traffic
+    aliases: [traffic_ts]
+    family: common-long-term
+    status: placeholder
+    source_status: pending
+    source_type: hf_file
+    source_ref: thuml/Time-Series-Library/traffic/traffic.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/traffic
+    upstream_name: THUML Time-Series-Library traffic
+    license_note: Review upstream dataset card/repository terms before publication.
+    citation_note: Cite original Traffic source when used.
+    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_cols: []
+    cache_key: traffic
+    cache_subdir: common-long-term/traffic
+    expected_files: [traffic.csv]
+    prepared_files:
+      primary_csv: traffic.csv
+    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
+    size_note: large multivariate CSV candidate
+    smokeable: false
+    skip_reason: large candidate; source ledger pending; no automatic download until approved
+    auth_required: false
+    placeholder: true
+    tags: [long-term, multivariate, large]
+
+  - name: exchange_rate
+    aliases: [exchange]
+    family: candidate
+    status: placeholder
+    source_status: pending
+    source_type: hf_file
+    source_ref: thuml/Time-Series-Library/exchange_rate/exchange_rate.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/exchange_rate
+    upstream_name: THUML Time-Series-Library exchange_rate
+    license_note: Review upstream dataset card/repository terms before publication.
+    citation_note: Cite original Exchange source when used.
+    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_cols: []
+    cache_key: exchange_rate
+    cache_subdir: candidate/exchange_rate
+    expected_files: [exchange_rate.csv]
+    prepared_files:
+      primary_csv: exchange_rate.csv
+    split_hint: verify against paper protocol before benchmarks
+    size_note: small CSV candidate
+    smokeable: false
+    skip_reason: candidate dataset; source ledger pending
+    auth_required: false
+    placeholder: true
+    tags: [candidate, long-term]
+
+  - name: illness
+    aliases: [ILI]
+    family: candidate
+    status: placeholder
+    source_status: pending
+    source_type: hf_file
+    source_ref: thuml/Time-Series-Library/illness/national_illness.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/illness
+    upstream_name: THUML Time-Series-Library illness
+    license_note: Review upstream dataset card/repository terms before publication.
+    citation_note: Cite original ILI source when used.
+    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_cols: []
+    cache_key: illness
+    cache_subdir: candidate/illness
+    expected_files: [national_illness.csv]
+    prepared_files:
+      primary_csv: national_illness.csv
+    split_hint: verify against paper protocol before benchmarks
+    size_note: small CSV candidate
+    smokeable: false
+    skip_reason: candidate dataset; source ledger pending
+    auth_required: false
+    placeholder: true
+    tags: [candidate, long-term]
+
+  - name: solar_energy_placeholder
+    aliases: [solar, Solar-Energy]
+    family: candidate
+    status: placeholder
+    source_status: pending
+    source_type: placeholder
+    source_ref: paper-common-solar-energy
+    source_url: null
+    upstream_name: Solar-Energy paper-common dataset
+    license_note: Source/license requires review before automatic download.
+    citation_note: Cite upstream Solar-Energy source when selected.
+    provenance_note: Mentioned in TSF papers; no canonical source approved for MVP.
+    checksum: null
+    format: unknown
+    timestamp_col: null
+    target_cols: []
+    cache_key: solar_energy
+    cache_subdir: candidate/solar_energy
+    expected_files: []
+    prepared_files: {}
+    split_hint: verify against paper protocol before benchmarks
+    size_note: source pending
+    smokeable: false
+    skip_reason: no approved automatic source yet
+    auth_required: false
+    placeholder: true
+    tags: [candidate]
+
+  - name: pems_placeholder
+    aliases: [PEMS03, PEMS04, PEMS07, PEMS08, PeMS]
+    family: candidate
+    status: placeholder
+    source_status: pending
+    source_type: placeholder
+    source_ref: paper-common-pems
+    source_url: null
+    upstream_name: PeMS paper-common traffic datasets
+    license_note: Source/license requires review before automatic download.
+    citation_note: Cite upstream PeMS source when selected.
+    provenance_note: Common in TSF papers; potentially large and license-sensitive.
+    checksum: null
+    format: unknown
+    timestamp_col: null
+    target_cols: []
+    cache_key: pems
+    cache_subdir: candidate/pems
+    expected_files: []
+    prepared_files: {}
+    split_hint: verify against paper protocol before benchmarks
+    size_note: large/source pending
+    smokeable: false
+    skip_reason: no approved automatic source yet; avoid huge mandatory downloads
+    auth_required: false
+    placeholder: true
+    tags: [candidate, large]
+
   - name: monash_tourism_monthly_placeholder
+    aliases: [monash_tourism_monthly]
+    family: candidate
+    status: placeholder
+    source_status: pending
+    source_type: manual_only
     source_url: https://forecastingdata.org/
     upstream_name: Monash Time Series Forecasting Repository
     license_note: Check upstream dataset terms before publication.
     citation_note: Cite the upstream Monash forecasting repository when used.
+    provenance_note: Manual repository; automatic download not part of MVP.
     checksum: null
     format: tsf
     timestamp_col: null
-    target_columns: []
+    target_cols: []
     cache_key: monash_tourism_monthly
+    cache_subdir: candidate/monash_tourism_monthly
+    expected_files: []
+    prepared_files: {}
     split_hint: repository-defined
+    size_note: manual repository
+    smokeable: false
+    skip_reason: manual upstream repository; no automatic download in this phase
     auth_required: false
     placeholder: true
+    tags: [candidate, monash]

@@ -81,11 +81,12 @@ pip install -e .
 python -m tsf_paperkit.cli doctor --format json
 
 # 3. List dataset/model recipes without downloading large artifacts
-python -m tsf_paperkit.cli data list
+python -m tsf_paperkit.cli data list --json
 python -m tsf_paperkit.cli model list
 
-# 4. Prepare the bundled toy dataset and built-in model metadata
-python -m tsf_paperkit.cli data prepare --dataset toy_series
+# 4. Inspect and prepare only the selected dataset
+python -m tsf_paperkit.cli data inspect --dataset toy_series --json
+python -m tsf_paperkit.cli data prepare --dataset toy_series --json
 python -m tsf_paperkit.cli model prepare --model dlinear
 
 # 5. Run the toy experiment
@@ -160,13 +161,48 @@ The package owns deterministic work. Skills only route intent to CLI commands an
 
 ---
 
+## Dataset-first workflow
+
+`tsf-paperkit` uses **selected downloads**. A command should never download every dataset in the registry by default.
+
+```bash
+# See available recipes and statuses
+python -m tsf_paperkit.cli data list --json
+python -m tsf_paperkit.cli data list --family ETT --json
+
+# Inspect provenance before preparing anything
+python -m tsf_paperkit.cli data inspect --dataset ETTh1 --json
+
+# Prepare exactly one selected supported dataset
+python -m tsf_paperkit.cli data prepare --dataset toy_series --json
+```
+
+`data prepare --json` returns `prepared_files.primary_csv`, `metadata_path`, and a `config_patch` that agents can copy into a run config. Placeholder datasets return a structured skip reason instead of a fake success.
+
+Current dataset registry status:
+
+| Dataset / family | Status | Source type | Smokeable | Notes |
+|---|---:|---|---:|---|
+| `toy_series` | supported | local | yes | Bundled demo fixture for fast smoke tests. |
+| ETT: `ETTh1`, `ETTh2`, `ETTm1`, `ETTm2` | placeholder | `hf_file` candidate | no | Candidate THUML source; source-ledger approval required before automatic download. |
+| Electricity/ECL, Weather, Traffic | placeholder | `hf_file` candidate | no | Common long-term datasets; no benchmark claims or bulk download. |
+| Exchange, ILI, Solar-Energy, PeMS | placeholder | candidate/manual | no | Documented because TSF papers use them; enable only after source/license review. |
+| Monash tourism monthly | placeholder | manual-only | no | Upstream terms must be checked manually. |
+
+Downloaded data belongs in `.cache/tsf-paperkit/datasets/` or your configured cache path. Do not commit cache contents, generated smoke results, model weights, or checkpoints.
+
+Smoke/demo outputs are readiness checks only. They are not benchmark numbers.
+
+---
+
 ## Common CLI surfaces
 
 | Surface | Use it for |
 |---|---|
 | `doctor` | Linux, Python, PyTorch, CUDA, cache readiness |
-| `data list` | Show dataset recipes and provenance notes |
-| `data prepare` | Prepare a dataset into local cache when supported |
+| `data list --json` | Show dataset recipes, statuses, source, license, and provenance notes |
+| `data inspect --dataset <name> --json` | Inspect one normalized dataset recipe before preparing it |
+| `data prepare --dataset <name> --json` | Prepare exactly one supported dataset into local cache |
 | `model list` | Show built-in and future model adapter recipes |
 | `model prepare` | Prepare model assets or confirm built-ins need none |
 | `run` | Execute configured TSF baselines and write `results.csv` |
@@ -210,7 +246,7 @@ python scripts/sync_agent_skills.py --check
 | Skill | Use it for |
 |---|---|
 | `tsf-doctor` | Verify Linux/Python/PyTorch/CUDA/cache/skill readiness |
-| `tsf-data` | Pick and prepare dataset recipes |
+| `tsf-data` | Select, inspect, and prepare only requested dataset recipes |
 | `tsf-models` | Inspect built-ins and future model asset recipes |
 | `tsf-run` | Turn experiment intent into config + run/ablate commands |
 | `tsf-check` | Summarize leakage, split, seed, timing, and artifact checks |
@@ -268,11 +304,12 @@ This repository stores **recipes, not large artifacts**.
 - No third-party datasets are redistributed.
 - No model weights or checkpoints are committed.
 - Dataset cache defaults to `.cache/tsf-paperkit/datasets/`.
+- Non-toy datasets must remain `placeholder` until `configs/dataset_sources.yaml` and `docs/dataset-sources.md` record source/license/provenance approval.
 - Model cache defaults to `.cache/tsf-paperkit/models/`.
 - Environment overrides are supported with `TSF_PAPERKIT_DATA_CACHE` and `TSF_PAPERKIT_MODEL_CACHE`.
 - Restricted or authenticated sources should fail clearly until the user accepts upstream terms.
 
-The dataset registry includes the bundled `toy_series` and a public placeholder recipe for the Monash forecasting repository. Placeholder recipes are metadata and provenance prompts, not hidden benchmark downloads.
+The dataset registry includes the bundled `toy_series` plus placeholder recipes for common TSF datasets such as ETT, Electricity/ECL, Weather, Traffic, Exchange, ILI, Solar-Energy, PeMS, and Monash candidates. Placeholder recipes are metadata and provenance prompts, not hidden benchmark downloads.
 
 ---
 
