@@ -1,0 +1,27 @@
+datasets:
+  - name: toy_series
+    source_url: examples/toy_series.csv
+    upstream_name: local-toy
+    license_note: bundled demo data
+    citation_note: not applicable
+    checksum: null
+    format: csv
+    timestamp_col: date
+    target_columns: [value]
+    cache_key: toy_series
+    split_hint: null
+    auth_required: false
+    placeholder: false
+  - name: monash_tourism_monthly_placeholder
+    source_url: https://forecastingdata.org/
+    upstream_name: Monash Time Series Forecasting Repository
+    license_note: Check upstream dataset terms before publication.
+    citation_note: Cite the upstream Monash forecasting repository when used.
+    checksum: null
+    format: tsf
+    timestamp_col: null
+    target_columns: []
+    cache_key: monash_tourism_monthly
+    split_hint: repository-defined
+    auth_required: false
+    placeholder: true

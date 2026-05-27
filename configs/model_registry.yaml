@@ -1,0 +1,46 @@
+models:
+  - name: naive
+    kind: builtin
+    provider: tsf-paperkit
+    revision: local
+    expected_files: []
+    cache_key: null
+    license_note: project license
+    auth_required: false
+    adapter: tsf_paperkit.models.naive
+  - name: linear
+    kind: builtin
+    provider: tsf-paperkit
+    revision: local
+    expected_files: []
+    cache_key: null
+    license_note: project license
+    auth_required: false
+    adapter: tsf_paperkit.models.linear
+  - name: dlinear
+    kind: builtin
+    provider: tsf-paperkit
+    revision: local
+    expected_files: []
+    cache_key: null
+    license_note: project license
+    auth_required: false
+    adapter: tsf_paperkit.models.dlinear
+  - name: timesfm_future
+    kind: future-adapter
+    provider: external
+    revision: TBD
+    expected_files: []
+    cache_key: timesfm_future
+    license_note: Future adapter TODO; user must follow upstream license.
+    auth_required: true
+    adapter: TODO TimesFM
+  - name: chronos_future
+    kind: future-adapter
+    provider: external
+    revision: TBD
+    expected_files: []
+    cache_key: chronos_future
+    license_note: Future adapter TODO; user must follow upstream license.
+    auth_required: true
+    adapter: TODO Chronos

@@ -1,0 +1,14 @@
+base:
+  config: configs/example.yaml
+
+ablations:
+  - name: dlinear_kernel_3
+    override:
+      models:
+        - name: dlinear
+          params:
+            moving_avg_kernel: 3
+  - name: dlinear_no_scaling
+    override:
+      data:
+        scale: false

@@ -1,0 +1,31 @@
+experiment:
+  name: toy_experiment
+  seed: 42
+  output_dir: results/toy_experiment
+
+data:
+  name: toy_series
+  path: examples/toy_series.csv
+  timestamp_col: date
+  target_cols: ["value"]
+  split:
+    train: 0.7
+    val: 0.1
+    test: 0.2
+  seq_len: 12
+  pred_len: 3
+  stride: 1
+  scale: true
+
+training:
+  batch_size: 16
+  epochs: 2
+  learning_rate: 0.01
+  device: auto
+
+models:
+  - name: naive
+  - name: linear
+  - name: dlinear
+    params:
+      moving_avg_kernel: 5

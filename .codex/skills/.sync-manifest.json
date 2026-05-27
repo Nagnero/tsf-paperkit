@@ -1,0 +1,12 @@
+{
+  "source": "agent-skills",
+  "skills": [
+    "tsf-doctor",
+    "tsf-data",
+    "tsf-models",
+    "tsf-run",
+    "tsf-check",
+    "tsf-report"
+  ],
+  "note": "SKILL.md copies are byte-for-byte; this sidecar is provenance only."
+}
