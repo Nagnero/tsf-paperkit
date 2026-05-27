@@ -28,6 +28,8 @@ class TrainOnlyScaler:
             return values.astype("float32")
         if self.scaler is None:
             raise RuntimeError("Scaler has not been fit.")
+        if values.size == 0:
+            return values.astype("float32")
         shape = values.shape
         scaled = self.scaler.transform(values.reshape(-1, shape[-1])).reshape(shape)
         return scaled.astype("float32")

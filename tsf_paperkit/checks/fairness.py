@@ -6,10 +6,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
+import pandas as pd
 import torch
 
 from tsf_paperkit.data.csv_loader import prepare_dataloaders
-from tsf_paperkit.runner.experiment import load_config
+from tsf_paperkit.runner.experiment import RESULT_COLUMNS, load_config
 
 
 def entry(name: str, status: str, message: str) -> dict[str, str]:
@@ -29,6 +30,18 @@ def check_config(config: dict[str, Any]) -> dict[str, Any]:
     checks.append(entry("seed_recorded", "pass" if config.get("experiment", {}).get("seed") is not None else "warn", str(config.get("experiment", {}).get("seed"))))
     out_dir = Path(config.get("experiment", {}).get("output_dir", "results"))
     checks.append(entry("resolved_config_saved", "pass" if (out_dir / "resolved_config.yaml").exists() else "warn", str(out_dir / "resolved_config.yaml")))
+    result_path = out_dir / "results.csv"
+    if result_path.exists():
+        results = pd.read_csv(result_path)
+        missing = [col for col in RESULT_COLUMNS if col not in results.columns]
+        checks.append(entry("results_required_columns", "fail" if missing else "pass", f"missing={missing}"))
+        if {"num_params", "train_time_sec", "inference_time_sec"}.issubset(results.columns):
+            valid_params = (results["num_params"] >= 0).all()
+            valid_timing = (results[["train_time_sec", "inference_time_sec"]] >= 0).all().all()
+            checks.append(entry("results_num_params_recorded", "pass" if valid_params else "fail", "num_params >= 0"))
+            checks.append(entry("results_timing_recorded", "pass" if valid_timing else "fail", "train/inference time >= 0"))
+    else:
+        checks.append(entry("results_csv_present", "warn", str(result_path)))
     status = "fail" if any(c["status"] == "fail" for c in checks) else "warn" if any(c["status"] == "warn" for c in checks) else "pass"
     return {"status": status, "checks": checks}
 

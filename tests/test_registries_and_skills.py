@@ -6,6 +6,7 @@ from pathlib import Path
 import torch
 
 from tsf_paperkit.data.registry import prepare_dataset, resolve_data_cache
+from tsf_paperkit.models.assets import resolve_model_cache
 from tsf_paperkit.models.registry import prepare_model
 from tsf_paperkit.runner.trainer import resolve_device
 
@@ -31,6 +32,16 @@ def test_cache_precedence(monkeypatch, tmp_path):
     assert resolve_data_cache() == tmp_path / "env"
     assert resolve_data_cache(config_cache_dir=str(tmp_path / "cfg")) == tmp_path / "cfg"
     assert resolve_data_cache(cli_cache_dir=str(tmp_path / "cli")) == tmp_path / "cli"
+    monkeypatch.setenv("TSF_PAPERKIT_MODEL_CACHE", str(tmp_path / "model-env"))
+    assert resolve_model_cache() == tmp_path / "model-env"
+    assert resolve_model_cache(config_cache_dir=str(tmp_path / "model-cfg")) == tmp_path / "model-cfg"
+    assert resolve_model_cache(cli_cache_dir=str(tmp_path / "model-cli")) == tmp_path / "model-cli"
+
+
+def test_import_does_not_download_artifacts(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    subprocess.check_call([sys.executable, "-c", "import tsf_paperkit; import tsf_paperkit.models.registry; import tsf_paperkit.data.registry"])
+    assert not (tmp_path / ".cache").exists()
 
 
 def test_device_resolution_cpu_and_cuda_failure():
