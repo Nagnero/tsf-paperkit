@@ -1,0 +1,35 @@
+experiment:
+  name: etth1_patchtst_smoke
+  seed: 42
+  output_dir: results/etth1_patchtst_smoke
+
+data:
+  name: ETTh1
+  path: .cache/tsf-paperkit/datasets/ETT/ETTh1/ETTh1.csv
+  timestamp_col: date
+  target_cols: [OT]
+  split:
+    train: 0.7
+    val: 0.1
+    test: 0.2
+  seq_len: 24
+  pred_len: 12
+  stride: 4
+  scale: true
+
+training:
+  batch_size: 128
+  epochs: 1
+  learning_rate: 0.001
+  device: auto
+
+models:
+  - name: naive
+  - name: patchtst
+    params:
+      patch_len: 8
+      stride: 4
+      d_model: 32
+      n_heads: 4
+      n_layers: 1
+      dropout: 0.1

@@ -32,18 +32,19 @@ models:
     auth_required: false
     optional_extra: null
     adapter: builtin.dlinear
-  - name: patchtst_future
-    status: planned
-    kind: future-adapter
-    provider: external
-    revision: TBD
+  - name: patchtst
+    status: supported
+    kind: torch-adapter
+    provider: tsf-paperkit
+    revision: local-mvp
     expected_files: []
-    cache_key: patchtst_future
-    license_note: Future adapter TODO; review upstream code and paper license before implementation.
+    cache_key: null
+    license_note: project MIT license; inspired by PatchTST paper concepts, no upstream code copied
+    citation_note: Cite PatchTST paper when using this adapter in papers.
     auth_required: false
-    optional_extra: patchtst
-    adapter: future.patchtst
-    docs: docs/model-adapters.md#patchtst
+    optional_extra: null
+    adapter: builtin.patchtst
+    docs: docs/model-adapters.md#patchtst-mvp
   - name: timemixer_future
     status: planned
     kind: future-adapter

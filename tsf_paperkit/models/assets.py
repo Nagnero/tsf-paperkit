@@ -11,8 +11,8 @@ def resolve_model_cache(cli_cache_dir: str | None = None, config_cache_dir: str 
 
 def prepare_model_asset(recipe: dict[str, Any], cache_dir: str | None = None, config_cache_dir: str | None = None) -> dict[str, Any]:
     cache = resolve_model_cache(cache_dir, config_cache_dir)
-    if recipe.get("kind") == "builtin":
-        return {"status": "ready", "model": recipe["name"], "cache_path": None, "message": "built-in model requires no external assets"}
+    if recipe.get("kind") in {"builtin", "torch-adapter"}:
+        return {"status": "ready", "model": recipe["name"], "cache_path": None, "message": "local model requires no external assets"}
     if recipe.get("kind") == "future-adapter":
         status = "blocked" if recipe.get("auth_required") else "planned"
         return {

@@ -180,6 +180,7 @@ python -m tsf_paperkit.cli data prepare --dataset ETTh1 --json
 
 # Run a small ETT smoke config after preparation
 python -m tsf_paperkit.cli run --config configs/ett/etth1_smoke.yaml
+python -m tsf_paperkit.cli run --config configs/ett/etth1_patchtst_smoke.yaml
 ```
 
 `data prepare --json` returns `prepared_files.primary_csv`, `metadata_path`, and a `config_patch` that agents can copy into a run config. Supported ETT recipes download a single checksum-pinned CSV from THUML/Hugging Face. Placeholder datasets return a structured skip reason instead of a fake success.
@@ -336,7 +337,7 @@ The dataset registry includes the bundled `toy_series`, supported ETT/Weather/Ex
 
 ## Adding a model
 
-Runnable MVP models remain deliberately small: `naive`, `linear`, and `dlinear`. Advanced models are tracked as **future adapters** until their dependency, license, asset, and smoke-test story is clear.
+Runnable MVP models remain deliberately small: `naive`, `linear`, `dlinear`, and `patchtst`. Advanced models are tracked as **future adapters** until their dependency, license, asset, and smoke-test story is clear.
 
 Adapter contract:
 
@@ -348,14 +349,14 @@ output: batch, pred_len, channels
 Promotion flow:
 
 1. Read `docs/model-adapters.md`.
-2. Keep new dependencies in optional extras such as `.[patchtst]`, `.[research-adapters]`, or `.[foundation-adapters]`.
+2. Keep new dependencies in optional extras such as `.[research-adapters]` or `.[foundation-adapters]`. The local PatchTST MVP uses only core PyTorch.
 3. Implement `BaseForecastModel` only after source/revision/license/weight policy is recorded.
 4. Add the adapter key to `MODEL_CLASSES` only when it is runnable.
 5. Add metadata to `configs/model_registry.yaml`.
 6. Add a tiny CPU smoke test and a config before claiming support.
 7. Never commit weights, checkpoints, generated outputs, or downloaded model artifacts.
 
-Future adapter placeholders are already recorded for PatchTST, TimeMixer, AMD-style decomposition, TimesFM, Chronos, Moirai, and TiRex. `model prepare` reports these as planned/blocked instead of pretending they are runnable.
+PatchTST is the first runnable advanced-style adapter. Future adapter placeholders remain recorded for TimeMixer, AMD-style decomposition, TimesFM, Chronos, Moirai, and TiRex. `model prepare` reports those as planned/blocked instead of pretending they are runnable.
 
 ---
 
@@ -393,5 +394,5 @@ Then confirm Git tracks no generated datasets, model weights, checkpoints, cache
 - Toy/demo outputs are not benchmark results.
 - This project does not claim SOTA.
 - v1 official support is Linux only.
-- PatchTST, TimeMixer, AMD-style models, TimesFM, Chronos, Moirai, and TiRex are documented future adapters, not implemented MVP models.
+- PatchTST is implemented as a local MVP adapter; TimeMixer, AMD-style models, TimesFM, Chronos, Moirai, and TiRex remain documented future adapters.
 - Real public datasets should be downloaded only through explicit recipes with upstream license/citation awareness.

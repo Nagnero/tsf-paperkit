@@ -11,4 +11,4 @@ Adapter promotion checklist:
 5. Add a tiny CPU smoke test before changing a registry entry from `future-adapter` to runnable.
 6. Do not claim benchmark/SOTA from smoke configs.
 
-Current placeholders: PatchTST, TimeMixer, AMD-style decomposition, TimesFM, Chronos, Moirai, TiRex.
+Current placeholders: TimeMixer, AMD-style decomposition, TimesFM, Chronos, Moirai, TiRex. PatchTST lives in `tsf_paperkit/models/patchtst.py` as a local MVP adapter.

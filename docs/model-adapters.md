@@ -1,6 +1,6 @@
 # Model Adapter Contract
 
-`tsf-paperkit` keeps the MVP small: runnable models are `naive`, `linear`, and `dlinear`. Advanced TSF models are tracked as **future adapters** until their dependencies, source, license, weight policy, and smoke tests are explicit.
+`tsf-paperkit` keeps the MVP small: runnable models are `naive`, `linear`, `dlinear`, and a local PatchTST-style MVP. Additional advanced TSF models are tracked as **future adapters** until their dependencies, source, license, weight policy, and smoke tests are explicit.
 
 ## Runtime contract
 
@@ -34,7 +34,6 @@ Adapter rules:
 ## Optional extras
 
 ```bash
-pip install -e '.[patchtst]'
 pip install -e '.[research-adapters]'
 pip install -e '.[foundation-adapters]'
 pip install -e '.[adapters]'
@@ -46,7 +45,7 @@ These extras only prepare dependency lanes. They do not make future adapters run
 
 | Registry name | Adapter key | Optional extra | Current state |
 |---|---|---|---|
-| `patchtst_future` | `future.patchtst` | `patchtst` | planned; dependency lane and placeholder spec only |
+| `patchtst` | `builtin.patchtst` | none | supported local MVP; patching + channel-independent shared Transformer, no upstream code copied |
 | `timemixer_future` | `future.timemixer` | `research-adapters` | planned; source/license review required |
 | `amd_future` | `future.amd` | `research-adapters` | planned; exact AMD-style variant must be selected |
 | `timesfm_future` | `future.timesfm` | `foundation-adapters` | planned; auth/license/weight review required |
@@ -54,9 +53,15 @@ These extras only prepare dependency lanes. They do not make future adapters run
 | `moirai_future` | `future.moirai` | `foundation-adapters` | planned; auth/license/weight review required |
 | `tirex_future` | `future.tirex` | `foundation-adapters` | planned; auth/license/weight review required |
 
+## PatchTST MVP
+
+The runnable `patchtst` adapter is a small PyTorch implementation inspired by the PatchTST paper: it segments each channel into patches, applies a shared Transformer encoder independently across channels, and projects encoded patches to the forecast horizon. It intentionally omits RevIN, self-supervised pretraining, and benchmark-tuned hyperparameters. Use `configs/ett/etth1_patchtst_smoke.yaml` as a readiness check, not a benchmark.
+
+Primary reference: Nie et al., “A Time Series is Worth 64 Words: Long-term Forecasting with Transformers,” ICLR 2023 / arXiv:2211.14730.
+
 ## Promotion checklist
 
-To promote `patchtst_future` or another future adapter:
+To promote another future adapter:
 
 1. Select an upstream source and record the exact revision.
 2. Verify license and citation notes.

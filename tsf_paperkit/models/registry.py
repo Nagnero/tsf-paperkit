@@ -10,11 +10,13 @@ from tsf_paperkit.models.assets import prepare_model_asset
 from tsf_paperkit.models.dlinear import DLinearForecastModel
 from tsf_paperkit.models.linear import LinearForecastModel
 from tsf_paperkit.models.naive import NaiveLastValue
+from tsf_paperkit.models.patchtst import PatchTSTForecastModel
 
 MODEL_CLASSES = {
     "builtin.naive": NaiveLastValue,
     "builtin.linear": LinearForecastModel,
     "builtin.dlinear": DLinearForecastModel,
+    "builtin.patchtst": PatchTSTForecastModel,
 }
 
 
