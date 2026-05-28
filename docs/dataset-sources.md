@@ -7,9 +7,9 @@
 | `toy_series` | Bundled `examples/toy_series.csv` | supported | approved | Tiny demo fixture for smoke tests only. |
 | ETT (`ETTh1`, `ETTh2`, `ETTm1`, `ETTm2`) | THUML Time-Series-Library `ETT-small` files on Hugging Face | supported | approved | HTTPS CSV downloads are enabled one dataset at a time with pinned SHA-256 checksums. |
 | Electricity / ECL | THUML Time-Series-Library `electricity` folder | placeholder | pending | Candidate public source; larger multivariate CSV. |
-| Weather | THUML Time-Series-Library `weather` folder | placeholder | pending | Candidate public source; verify protocol before benchmark use. |
+| Weather | THUML Time-Series-Library `weather/weather.csv` on Hugging Face | supported | approved | HTTPS CSV download with pinned SHA-256 checksum. |
 | Traffic | THUML Time-Series-Library `traffic` folder | placeholder | pending | Candidate public source; large, not mandatory for first-pass smoke. |
-| Exchange | THUML Time-Series-Library `exchange_rate` folder | placeholder | pending | Candidate for later enablement. |
+| Exchange | THUML Time-Series-Library `exchange_rate/exchange_rate.csv` on Hugging Face | supported | approved | HTTPS CSV download with pinned SHA-256 checksum. |
 | ILI / illness | THUML Time-Series-Library `illness` folder | placeholder | pending | Candidate for later enablement. |
 | Solar-Energy | TBD | placeholder | pending | Common in TSF papers, but no approved automatic source yet. |
 | PeMS03/04/07/08 | TBD | placeholder | pending | Potentially large/license-sensitive; no automatic source yet. |
@@ -19,7 +19,7 @@ ETT approval notes:
 - Source URL pattern: `https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/<dataset>.csv`.
 - License: CC BY 4.0 per the THUML Time-Series-Library Hugging Face dataset card.
 - Citation: cite the THUML Time-Series-Library/TimesNet source and the original ETT/Informer dataset paper when publishing results.
-- Scope: ETT smoke configs use ratio splits and short horizons for readiness only; they are not benchmark protocol claims.
+- Scope: ETT, Weather, and Exchange smoke configs use ratio splits and short horizons for readiness only; they are not benchmark protocol claims.
 
 External grounding:
 - THUML Time-Series-Library dataset card: https://huggingface.co/datasets/thuml/Time-Series-Library
@@ -31,3 +31,4 @@ Policy:
 2. Do not mark non-toy recipes `supported` until source/license/citation/size/checksum expectations are reviewed and recorded in `configs/dataset_sources.yaml`.
 3. Approved remote recipes must use HTTPS and include a checksum or explicit checksum waiver.
 4. Smoke/demo outputs are not benchmark claims.
+5. Larger datasets such as Electricity/Traffic remain placeholders until explicitly prioritized; do not bulk-enable them only because a URL is known.

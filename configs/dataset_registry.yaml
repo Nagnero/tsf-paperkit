@@ -183,31 +183,33 @@ datasets:
   - name: weather
     aliases: [weather_ts]
     family: common-long-term
-    status: placeholder
-    source_status: pending
-    source_type: hf_file
-    source_ref: thuml/Time-Series-Library/weather/weather.csv
-    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/weather
+    status: supported
+    source_status: approved
+    source_approval_id: weather_hf_tslib
+    source_type: https_file
+    source_ref: thuml/Time-Series-Library:weather/weather.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/weather/weather.csv
     upstream_name: THUML Time-Series-Library weather
-    license_note: Review upstream dataset card/repository terms before publication.
-    citation_note: Cite original Weather source when used.
-    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
-    checksum: null
+    license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card; confirm citation requirements before publication.
+    citation_note: Cite THUML Time-Series-Library/TimesNet source and original Weather dataset source when used.
+    provenance_note: Approved HTTPS file from THUML Time-Series-Library Hugging Face dataset repository; checksum pinned in configs/dataset_sources.yaml.
+    checksum: 34ee981d07313e51da2a50bb600072c8ae4a69cb4b0651f4cb93a069d7a2ba63
+    sha256: 34ee981d07313e51da2a50bb600072c8ae4a69cb4b0651f4cb93a069d7a2ba63
+    expected_size_bytes: 7235425
     format: csv
     timestamp_col: date
-    target_cols: []
+    target_cols: [OT]
     cache_key: weather
     cache_subdir: common-long-term/weather
     expected_files: [weather.csv]
     prepared_files:
       primary_csv: weather.csv
-    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
-    size_note: moderate multivariate CSV candidate
-    smokeable: false
-    skip_reason: source ledger pending; no automatic download until approved
+    split_hint: common long-term forecasting split; smoke configs use ratio split and are not benchmark protocols
+    size_note: moderate Weather CSV; 7235425 bytes
+    smokeable: true
     auth_required: false
-    placeholder: true
-    tags: [long-term, multivariate]
+    placeholder: false
+    tags: [long-term, multivariate, supported, smoke]
 
   - name: traffic
     aliases: [traffic_ts]
@@ -241,31 +243,33 @@ datasets:
   - name: exchange_rate
     aliases: [exchange]
     family: candidate
-    status: placeholder
-    source_status: pending
-    source_type: hf_file
-    source_ref: thuml/Time-Series-Library/exchange_rate/exchange_rate.csv
-    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/exchange_rate
+    status: supported
+    source_status: approved
+    source_approval_id: exchange_rate_hf_tslib
+    source_type: https_file
+    source_ref: thuml/Time-Series-Library:exchange_rate/exchange_rate.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/exchange_rate/exchange_rate.csv
     upstream_name: THUML Time-Series-Library exchange_rate
-    license_note: Review upstream dataset card/repository terms before publication.
-    citation_note: Cite original Exchange source when used.
-    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
-    checksum: null
+    license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card; confirm citation requirements before publication.
+    citation_note: Cite THUML Time-Series-Library/TimesNet source and original Exchange dataset source when used.
+    provenance_note: Approved HTTPS file from THUML Time-Series-Library Hugging Face dataset repository; checksum pinned in configs/dataset_sources.yaml.
+    checksum: 48b4d9d3d508f5104162e85b9a6042e3557fde11aa9f2944eba8c0d0efc89842
+    sha256: 48b4d9d3d508f5104162e85b9a6042e3557fde11aa9f2944eba8c0d0efc89842
+    expected_size_bytes: 637800
     format: csv
     timestamp_col: date
-    target_cols: []
+    target_cols: [OT]
     cache_key: exchange_rate
     cache_subdir: candidate/exchange_rate
     expected_files: [exchange_rate.csv]
     prepared_files:
       primary_csv: exchange_rate.csv
-    split_hint: verify against paper protocol before benchmarks
-    size_note: small CSV candidate
-    smokeable: false
-    skip_reason: candidate dataset; source ledger pending
+    split_hint: common long-term forecasting split; smoke configs use ratio split and are not benchmark protocols
+    size_note: small Exchange CSV; 637800 bytes
+    smokeable: true
     auth_required: false
-    placeholder: true
-    tags: [candidate, long-term]
+    placeholder: false
+    tags: [long-term, exchange, supported, smoke]
 
   - name: illness
     aliases: [ILI]

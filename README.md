@@ -88,6 +88,7 @@ python -m tsf_paperkit.cli model list
 python -m tsf_paperkit.cli data inspect --dataset toy_series --json
 python -m tsf_paperkit.cli data prepare --dataset toy_series --json
 python -m tsf_paperkit.cli data prepare --dataset ETTh1 --json
+python -m tsf_paperkit.cli data prepare --dataset weather --json
 python -m tsf_paperkit.cli model prepare --model dlinear
 
 # 5. Run the toy experiment
@@ -189,8 +190,10 @@ Current dataset registry status:
 |---|---:|---|---:|---|
 | `toy_series` | supported | local | yes | Bundled demo fixture for fast smoke tests. |
 | ETT: `ETTh1`, `ETTh2`, `ETTm1`, `ETTm2` | supported | `https_file` | yes | Single-file THUML/Hugging Face downloads with pinned SHA-256 checksums; smoke configs are readiness checks, not benchmarks. |
-| Electricity/ECL, Weather, Traffic | placeholder | `hf_file` candidate | no | Common long-term datasets; no benchmark claims or bulk download. |
-| Exchange, ILI, Solar-Energy, PeMS | placeholder | candidate/manual | no | Documented because TSF papers use them; enable only after source/license review. |
+| Weather | supported | `https_file` | yes | Single-file THUML/Hugging Face download with pinned SHA-256 checksum. |
+| Electricity/ECL, Traffic | placeholder | `hf_file` candidate | no | Larger common long-term datasets; no benchmark claims or bulk download. |
+| Exchange | supported | `https_file` | yes | Small THUML/Hugging Face CSV with pinned SHA-256 checksum. |
+| ILI, Solar-Energy, PeMS | placeholder | candidate/manual | no | Documented because TSF papers use them; enable only after source/license review. |
 | Monash tourism monthly | placeholder | manual-only | no | Upstream terms must be checked manually. |
 
 Downloaded data belongs in `.cache/tsf-paperkit/datasets/` or your configured cache path. Do not commit cache contents, generated smoke results, model weights, or checkpoints.
@@ -308,12 +311,12 @@ This repository stores **recipes, not large artifacts**.
 - No third-party datasets are redistributed.
 - No model weights or checkpoints are committed.
 - Dataset cache defaults to `.cache/tsf-paperkit/datasets/`.
-- Non-toy datasets must remain `placeholder` until `configs/dataset_sources.yaml` and `docs/dataset-sources.md` record source/license/provenance approval. ETT is the first approved non-toy family.
+- Non-toy datasets must remain `placeholder` until `configs/dataset_sources.yaml` and `docs/dataset-sources.md` record source/license/provenance approval. ETT, Weather, and Exchange are the first approved non-toy recipes.
 - Model cache defaults to `.cache/tsf-paperkit/models/`.
 - Environment overrides are supported with `TSF_PAPERKIT_DATA_CACHE` and `TSF_PAPERKIT_MODEL_CACHE`.
 - Restricted or authenticated sources should fail clearly until the user accepts upstream terms.
 
-The dataset registry includes the bundled `toy_series`, supported ETT recipes, and placeholder recipes for common TSF datasets such as Electricity/ECL, Weather, Traffic, Exchange, ILI, Solar-Energy, PeMS, and Monash candidates. Placeholder recipes are metadata and provenance prompts, not hidden benchmark downloads.
+The dataset registry includes the bundled `toy_series`, supported ETT/Weather/Exchange recipes, and placeholder recipes for common TSF datasets such as Electricity/ECL, Traffic, ILI, Solar-Energy, PeMS, and Monash candidates. Placeholder recipes are metadata and provenance prompts, not hidden benchmark downloads.
 
 ---
 

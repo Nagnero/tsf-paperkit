@@ -41,6 +41,9 @@ def test_dataset_registry_schema_and_aliases():
     assert ett["source_type"] == "https_file"
     assert ett["source_url"].startswith("https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/")
     assert len(ett["sha256"]) == 64
+    assert dataset_recipe("weather")["status"] == "supported"
+    assert dataset_recipe("exchange")["status"] == "supported"
+    assert dataset_recipe("electricity")["status"] == "placeholder"
     errors = validate_dataset_registry([
         {
             "name": "bad_supported",
@@ -201,6 +204,11 @@ def test_data_list_json_and_filters():
     names = {item["name"] for item in data["datasets"]}
     assert {"ETTh1", "ETTh2", "ETTm1", "ETTm2"}.issubset(names)
     assert "toy_series" not in names
+
+    common = subprocess.check_output([sys.executable, "-m", "tsf_paperkit.cli", "data", "list", "--json", "--family", "common-long-term"], text=True)
+    common_names = {item["name"]: item["status"] for item in json.loads(common)["datasets"]}
+    assert common_names["weather"] == "supported"
+    assert common_names["electricity"] == "placeholder"
 
 
 def test_data_inspect_json_alias():

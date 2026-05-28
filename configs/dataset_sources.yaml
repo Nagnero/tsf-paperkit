@@ -61,3 +61,27 @@ approved_sources:
     dataset paper.
   sha256: db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd
   expected_size_bytes: 9677236
+- id: weather_hf_tslib
+  dataset: weather
+  source_status: approved
+  source_type: https_file
+  source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/weather/weather.csv
+  source_ref: thuml/Time-Series-Library:weather/weather.csv
+  reviewer: tsf-paperkit maintainers
+  reviewed_at: '2026-05-28'
+  license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card.
+  citation_note: Cite THUML Time-Series-Library/TimesNet source and original Weather dataset source.
+  sha256: 34ee981d07313e51da2a50bb600072c8ae4a69cb4b0651f4cb93a069d7a2ba63
+  expected_size_bytes: 7235425
+- id: exchange_rate_hf_tslib
+  dataset: exchange_rate
+  source_status: approved
+  source_type: https_file
+  source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/exchange_rate/exchange_rate.csv
+  source_ref: thuml/Time-Series-Library:exchange_rate/exchange_rate.csv
+  reviewer: tsf-paperkit maintainers
+  reviewed_at: '2026-05-28'
+  license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card.
+  citation_note: Cite THUML Time-Series-Library/TimesNet source and original Exchange dataset source.
+  sha256: 48b4d9d3d508f5104162e85b9a6042e3557fde11aa9f2944eba8c0d0efc89842
+  expected_size_bytes: 637800
