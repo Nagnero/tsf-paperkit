@@ -1,0 +1,31 @@
+experiment:
+  name: etth2_smoke
+  seed: 42
+  output_dir: results/etth2_smoke
+
+data:
+  name: ETTh2
+  path: .cache/tsf-paperkit/datasets/ETT/ETTh2/ETTh2.csv
+  timestamp_col: date
+  target_cols: [OT]
+  split:
+    train: 0.7
+    val: 0.1
+    test: 0.2
+  seq_len: 24
+  pred_len: 12
+  stride: 1
+  scale: true
+
+training:
+  batch_size: 128
+  epochs: 1
+  learning_rate: 0.001
+  device: auto
+
+models:
+  - name: naive
+  - name: linear
+  - name: dlinear
+    params:
+      moving_avg_kernel: 25

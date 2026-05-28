@@ -118,12 +118,16 @@ def validate_dataset_registry(
                 for source_field in ("source_url", "source_ref"):
                     if recipe.get(source_field) and approval.get(source_field) != recipe.get(source_field):
                         errors.append(f"{name}: source approval {approval_id!r} {source_field} does not match recipe")
+                if recipe.get("sha256") and approval.get("sha256") and approval.get("sha256") != recipe.get("sha256"):
+                    errors.append(f"{name}: source approval {approval_id!r} sha256 does not match recipe")
             source_url = str(recipe.get("source_url") or "")
             is_remote = source_url.startswith(("http://", "https://"))
             if is_remote and not source_url.startswith("https://"):
                 errors.append(f"{name}: approved remote sources must use https")
             if is_remote and not (recipe.get("sha256") or recipe.get("checksum") or recipe.get("checksum_waiver")):
                 errors.append(f"{name}: approved remote sources require sha256 or checksum_waiver")
+            if approval and is_remote and not (approval.get("sha256") or approval.get("checksum") or approval.get("checksum_waiver")):
+                errors.append(f"{name}: approved remote source ledger entries require sha256 or checksum_waiver")
     return errors
 
 

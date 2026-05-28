@@ -1,11 +1,63 @@
 approved_sources:
-  - id: toy_series_local
-    dataset: toy_series
-    source_status: approved
-    source_type: local
-    source_url: examples/toy_series.csv
-    reviewer: tsf-paperkit maintainers
-    reviewed_at: 2026-05-27
-    license_note: bundled demo data
-    citation_note: not applicable
-    checksum_waiver: bundled tiny fixture tracked in repository
+- id: toy_series_local
+  dataset: toy_series
+  source_status: approved
+  source_type: local
+  source_url: examples/toy_series.csv
+  reviewer: tsf-paperkit maintainers
+  reviewed_at: 2026-05-27
+  license_note: bundled demo data
+  citation_note: not applicable
+  checksum_waiver: bundled tiny fixture tracked in repository
+- id: etth1_hf_tslib
+  dataset: ETTh1
+  source_status: approved
+  source_type: https_file
+  source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/ETTh1.csv
+  source_ref: thuml/Time-Series-Library:ETT-small/ETTh1.csv
+  reviewer: tsf-paperkit maintainers
+  reviewed_at: '2026-05-28'
+  license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card.
+  citation_note: Cite THUML Time-Series-Library/TimesNet source and original ETT/Informer
+    dataset paper.
+  sha256: f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066
+  expected_size_bytes: 2589657
+- id: etth2_hf_tslib
+  dataset: ETTh2
+  source_status: approved
+  source_type: https_file
+  source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/ETTh2.csv
+  source_ref: thuml/Time-Series-Library:ETT-small/ETTh2.csv
+  reviewer: tsf-paperkit maintainers
+  reviewed_at: '2026-05-28'
+  license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card.
+  citation_note: Cite THUML Time-Series-Library/TimesNet source and original ETT/Informer
+    dataset paper.
+  sha256: a3dc2c597b9218c7ce1cd55eb77b283fd459a1d09d753063f944967dd6b9218b
+  expected_size_bytes: 2417960
+- id: ettm1_hf_tslib
+  dataset: ETTm1
+  source_status: approved
+  source_type: https_file
+  source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/ETTm1.csv
+  source_ref: thuml/Time-Series-Library:ETT-small/ETTm1.csv
+  reviewer: tsf-paperkit maintainers
+  reviewed_at: '2026-05-28'
+  license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card.
+  citation_note: Cite THUML Time-Series-Library/TimesNet source and original ETT/Informer
+    dataset paper.
+  sha256: 6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e
+  expected_size_bytes: 10360719
+- id: ettm2_hf_tslib
+  dataset: ETTm2
+  source_status: approved
+  source_type: https_file
+  source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/ETTm2.csv
+  source_ref: thuml/Time-Series-Library:ETT-small/ETTm2.csv
+  reviewer: tsf-paperkit maintainers
+  reviewed_at: '2026-05-28'
+  license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card.
+  citation_note: Cite THUML Time-Series-Library/TimesNet source and original ETT/Informer
+    dataset paper.
+  sha256: db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd
+  expected_size_bytes: 9677236

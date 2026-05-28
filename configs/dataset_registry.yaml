@@ -30,16 +30,19 @@ datasets:
   - name: ETTh1
     aliases: [ett_h1, ETT-hourly-1]
     family: ETT
-    status: placeholder
-    source_status: pending
-    source_type: hf_file
-    source_ref: thuml/Time-Series-Library/ETT-small/ETTh1.csv
-    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/ETT-small
+    status: supported
+    source_status: approved
+    source_approval_id: etth1_hf_tslib
+    source_type: https_file
+    source_ref: thuml/Time-Series-Library:ETT-small/ETTh1.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/ETTh1.csv
     upstream_name: THUML Time-Series-Library ETT-small
-    license_note: Review upstream dataset card/repository terms before publication.
-    citation_note: Cite original ETT/Time-Series-Library source when used.
-    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
-    checksum: null
+    license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card; confirm citation requirements before publication.
+    citation_note: Cite THUML Time-Series-Library/TimesNet survey source and the original ETT/Informer dataset paper when used in papers.
+    provenance_note: Approved HTTPS file from THUML Time-Series-Library Hugging Face dataset repository; checksum pinned in configs/dataset_sources.yaml.
+    checksum: f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066
+    sha256: f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066
+    expected_size_bytes: 2589657
     format: csv
     timestamp_col: date
     target_cols: [OT]
@@ -48,27 +51,29 @@ datasets:
     expected_files: [ETTh1.csv]
     prepared_files:
       primary_csv: ETTh1.csv
-    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
-    size_note: small CSV candidate
-    smokeable: false
-    skip_reason: source ledger pending; no automatic download until approved
+    split_hint: common long-term forecasting split; smoke configs use ratio split and are not benchmark protocols
+    size_note: hourly ETT CSV; 2589657 bytes
+    smokeable: true
     auth_required: false
-    placeholder: true
-    tags: [long-term, ett]
+    placeholder: false
+    tags: [long-term, ett, supported, smoke]
 
   - name: ETTh2
     aliases: [ett_h2, ETT-hourly-2]
     family: ETT
-    status: placeholder
-    source_status: pending
-    source_type: hf_file
-    source_ref: thuml/Time-Series-Library/ETT-small/ETTh2.csv
-    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/ETT-small
+    status: supported
+    source_status: approved
+    source_approval_id: etth2_hf_tslib
+    source_type: https_file
+    source_ref: thuml/Time-Series-Library:ETT-small/ETTh2.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/ETTh2.csv
     upstream_name: THUML Time-Series-Library ETT-small
-    license_note: Review upstream dataset card/repository terms before publication.
-    citation_note: Cite original ETT/Time-Series-Library source when used.
-    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
-    checksum: null
+    license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card; confirm citation requirements before publication.
+    citation_note: Cite THUML Time-Series-Library/TimesNet survey source and the original ETT/Informer dataset paper when used in papers.
+    provenance_note: Approved HTTPS file from THUML Time-Series-Library Hugging Face dataset repository; checksum pinned in configs/dataset_sources.yaml.
+    checksum: a3dc2c597b9218c7ce1cd55eb77b283fd459a1d09d753063f944967dd6b9218b
+    sha256: a3dc2c597b9218c7ce1cd55eb77b283fd459a1d09d753063f944967dd6b9218b
+    expected_size_bytes: 2417960
     format: csv
     timestamp_col: date
     target_cols: [OT]
@@ -77,27 +82,29 @@ datasets:
     expected_files: [ETTh2.csv]
     prepared_files:
       primary_csv: ETTh2.csv
-    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
-    size_note: small CSV candidate
-    smokeable: false
-    skip_reason: source ledger pending; no automatic download until approved
+    split_hint: common long-term forecasting split; smoke configs use ratio split and are not benchmark protocols
+    size_note: hourly ETT CSV; 2417960 bytes
+    smokeable: true
     auth_required: false
-    placeholder: true
-    tags: [long-term, ett]
+    placeholder: false
+    tags: [long-term, ett, supported, smoke]
 
   - name: ETTm1
     aliases: [ett_m1, ETT-minute-1]
     family: ETT
-    status: placeholder
-    source_status: pending
-    source_type: hf_file
-    source_ref: thuml/Time-Series-Library/ETT-small/ETTm1.csv
-    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/ETT-small
+    status: supported
+    source_status: approved
+    source_approval_id: ettm1_hf_tslib
+    source_type: https_file
+    source_ref: thuml/Time-Series-Library:ETT-small/ETTm1.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/ETTm1.csv
     upstream_name: THUML Time-Series-Library ETT-small
-    license_note: Review upstream dataset card/repository terms before publication.
-    citation_note: Cite original ETT/Time-Series-Library source when used.
-    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
-    checksum: null
+    license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card; confirm citation requirements before publication.
+    citation_note: Cite THUML Time-Series-Library/TimesNet survey source and the original ETT/Informer dataset paper when used in papers.
+    provenance_note: Approved HTTPS file from THUML Time-Series-Library Hugging Face dataset repository; checksum pinned in configs/dataset_sources.yaml.
+    checksum: 6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e
+    sha256: 6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e
+    expected_size_bytes: 10360719
     format: csv
     timestamp_col: date
     target_cols: [OT]
@@ -106,27 +113,29 @@ datasets:
     expected_files: [ETTm1.csv]
     prepared_files:
       primary_csv: ETTm1.csv
-    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
-    size_note: medium CSV candidate
-    smokeable: false
-    skip_reason: source ledger pending; no automatic download until approved
+    split_hint: common long-term forecasting split; smoke configs use ratio split and are not benchmark protocols
+    size_note: 15-minute ETT CSV; 10360719 bytes
+    smokeable: true
     auth_required: false
-    placeholder: true
-    tags: [long-term, ett]
+    placeholder: false
+    tags: [long-term, ett, supported, smoke]
 
   - name: ETTm2
     aliases: [ett_m2, ETT-minute-2]
     family: ETT
-    status: placeholder
-    source_status: pending
-    source_type: hf_file
-    source_ref: thuml/Time-Series-Library/ETT-small/ETTm2.csv
-    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/tree/main/ETT-small
+    status: supported
+    source_status: approved
+    source_approval_id: ettm2_hf_tslib
+    source_type: https_file
+    source_ref: thuml/Time-Series-Library:ETT-small/ETTm2.csv
+    source_url: https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/ETTm2.csv
     upstream_name: THUML Time-Series-Library ETT-small
-    license_note: Review upstream dataset card/repository terms before publication.
-    citation_note: Cite original ETT/Time-Series-Library source when used.
-    provenance_note: Candidate public source; automatic download awaits source-ledger approval.
-    checksum: null
+    license_note: CC BY 4.0 per THUML Time-Series-Library Hugging Face dataset card; confirm citation requirements before publication.
+    citation_note: Cite THUML Time-Series-Library/TimesNet survey source and the original ETT/Informer dataset paper when used in papers.
+    provenance_note: Approved HTTPS file from THUML Time-Series-Library Hugging Face dataset repository; checksum pinned in configs/dataset_sources.yaml.
+    checksum: db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd
+    sha256: db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd
+    expected_size_bytes: 9677236
     format: csv
     timestamp_col: date
     target_cols: [OT]
@@ -135,13 +144,12 @@ datasets:
     expected_files: [ETTm2.csv]
     prepared_files:
       primary_csv: ETTm2.csv
-    split_hint: common long-term forecasting split; verify against paper protocol before benchmarks
-    size_note: medium CSV candidate
-    smokeable: false
-    skip_reason: source ledger pending; no automatic download until approved
+    split_hint: common long-term forecasting split; smoke configs use ratio split and are not benchmark protocols
+    size_note: 15-minute ETT CSV; 9677236 bytes
+    smokeable: true
     auth_required: false
-    placeholder: true
-    tags: [long-term, ett]
+    placeholder: false
+    tags: [long-term, ett, supported, smoke]
 
   - name: electricity
     aliases: [ECL, electric_load]

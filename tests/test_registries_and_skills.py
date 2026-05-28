@@ -36,7 +36,11 @@ def test_dataset_registry_schema_and_aliases():
     recipe = dataset_recipe("toy")
     assert recipe["name"] == "toy_series"
     assert recipe["status"] == "supported"
-    assert dataset_recipe("ETTh1")["status"] == "placeholder"
+    ett = dataset_recipe("ETTh1")
+    assert ett["status"] == "supported"
+    assert ett["source_type"] == "https_file"
+    assert ett["source_url"].startswith("https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/")
+    assert len(ett["sha256"]) == 64
     errors = validate_dataset_registry([
         {
             "name": "bad_supported",
@@ -135,6 +139,53 @@ def test_source_approval_must_be_approved_and_match_recipe():
     assert any("source_url does not match" in error for error in errors)
 
 
+def test_remote_source_approval_requires_matching_checksum():
+    recipe = {
+        "name": "remote_fixture",
+        "family": "fixture",
+        "status": "supported",
+        "source_status": "approved",
+        "source_approval_id": "remote_fixture",
+        "source_type": "https_file",
+        "source_url": "https://example.com/source.csv",
+        "source_ref": "example/source.csv",
+        "format": "csv",
+        "license_note": "x",
+        "citation_note": "x",
+        "sha256": "1" * 64,
+    }
+    errors = validate_dataset_registry(
+        [recipe],
+        source_approvals={
+            "remote_fixture": {
+                "id": "remote_fixture",
+                "dataset": "remote_fixture",
+                "source_status": "approved",
+                "source_type": "https_file",
+                "source_url": "https://example.com/source.csv",
+                "source_ref": "example/source.csv",
+                "sha256": "2" * 64,
+            }
+        },
+    )
+    assert any("sha256 does not match" in error for error in errors)
+
+    missing_ledger_checksum = validate_dataset_registry(
+        [recipe],
+        source_approvals={
+            "remote_fixture": {
+                "id": "remote_fixture",
+                "dataset": "remote_fixture",
+                "source_status": "approved",
+                "source_type": "https_file",
+                "source_url": "https://example.com/source.csv",
+                "source_ref": "example/source.csv",
+            }
+        },
+    )
+    assert any("source ledger entries require sha256" in error for error in missing_ledger_checksum)
+
+
 def test_data_list_has_placeholder_metadata():
     out = subprocess.check_output([sys.executable, "-m", "tsf_paperkit.cli", "data", "list"], text=True)
     assert "toy_series" in out
@@ -182,7 +233,7 @@ def test_data_prepare_json_contract(tmp_path):
 
 
 def test_placeholder_prepare_skips_without_cache_write(tmp_path):
-    data = prepare_dataset("ETTh1", cache_dir=str(tmp_path))
+    data = prepare_dataset("electricity", cache_dir=str(tmp_path))
     assert data["status"] == "skipped"
     assert "source ledger pending" in data["message"]
     assert not any(tmp_path.rglob("*.csv"))
@@ -207,7 +258,8 @@ def test_family_prepare_previews_and_does_not_prepare_placeholders(tmp_path):
     assert data["status"] == "preview"
     assert data["preview"] == ["ETTh1", "ETTh2", "ETTm1", "ETTm2"]
     assert data["prepared"] == []
-    assert {item["dataset"] for item in data["skipped"]} == {"ETTh1", "ETTh2", "ETTm1", "ETTm2"}
+    assert data["requires_confirmation"] is True
+    assert data["skipped"] == []
     assert not any(tmp_path.rglob("*.csv"))
 
 

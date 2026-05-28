@@ -5,7 +5,7 @@
 | Dataset / family | Candidate source | Registry status | Source status | Notes |
 | --- | --- | --- | --- | --- |
 | `toy_series` | Bundled `examples/toy_series.csv` | supported | approved | Tiny demo fixture for smoke tests only. |
-| ETT (`ETTh1`, `ETTh2`, `ETTm1`, `ETTm2`) | THUML Time-Series-Library `ETT-small` folder | placeholder | pending | Candidate public source; verify license/citation/checksum before automatic download. |
+| ETT (`ETTh1`, `ETTh2`, `ETTm1`, `ETTm2`) | THUML Time-Series-Library `ETT-small` files on Hugging Face | supported | approved | HTTPS CSV downloads are enabled one dataset at a time with pinned SHA-256 checksums. |
 | Electricity / ECL | THUML Time-Series-Library `electricity` folder | placeholder | pending | Candidate public source; larger multivariate CSV. |
 | Weather | THUML Time-Series-Library `weather` folder | placeholder | pending | Candidate public source; verify protocol before benchmark use. |
 | Traffic | THUML Time-Series-Library `traffic` folder | placeholder | pending | Candidate public source; large, not mandatory for first-pass smoke. |
@@ -14,6 +14,12 @@
 | Solar-Energy | TBD | placeholder | pending | Common in TSF papers, but no approved automatic source yet. |
 | PeMS03/04/07/08 | TBD | placeholder | pending | Potentially large/license-sensitive; no automatic source yet. |
 | Monash tourism monthly | https://forecastingdata.org/ | placeholder | pending | Manual upstream repository; no automatic download in this phase. |
+
+ETT approval notes:
+- Source URL pattern: `https://huggingface.co/datasets/thuml/Time-Series-Library/resolve/main/ETT-small/<dataset>.csv`.
+- License: CC BY 4.0 per the THUML Time-Series-Library Hugging Face dataset card.
+- Citation: cite the THUML Time-Series-Library/TimesNet source and the original ETT/Informer dataset paper when publishing results.
+- Scope: ETT smoke configs use ratio splits and short horizons for readiness only; they are not benchmark protocol claims.
 
 External grounding:
 - THUML Time-Series-Library dataset card: https://huggingface.co/datasets/thuml/Time-Series-Library

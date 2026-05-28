@@ -87,6 +87,7 @@ python -m tsf_paperkit.cli model list
 # 4. Inspect and prepare only the selected dataset
 python -m tsf_paperkit.cli data inspect --dataset toy_series --json
 python -m tsf_paperkit.cli data prepare --dataset toy_series --json
+python -m tsf_paperkit.cli data prepare --dataset ETTh1 --json
 python -m tsf_paperkit.cli model prepare --model dlinear
 
 # 5. Run the toy experiment
@@ -174,17 +175,20 @@ python -m tsf_paperkit.cli data list --family ETT --json
 python -m tsf_paperkit.cli data inspect --dataset ETTh1 --json
 
 # Prepare exactly one selected supported dataset
-python -m tsf_paperkit.cli data prepare --dataset toy_series --json
+python -m tsf_paperkit.cli data prepare --dataset ETTh1 --json
+
+# Run a small ETT smoke config after preparation
+python -m tsf_paperkit.cli run --config configs/ett/etth1_smoke.yaml
 ```
 
-`data prepare --json` returns `prepared_files.primary_csv`, `metadata_path`, and a `config_patch` that agents can copy into a run config. Placeholder datasets return a structured skip reason instead of a fake success.
+`data prepare --json` returns `prepared_files.primary_csv`, `metadata_path`, and a `config_patch` that agents can copy into a run config. Supported ETT recipes download a single checksum-pinned CSV from THUML/Hugging Face. Placeholder datasets return a structured skip reason instead of a fake success.
 
 Current dataset registry status:
 
 | Dataset / family | Status | Source type | Smokeable | Notes |
 |---|---:|---|---:|---|
 | `toy_series` | supported | local | yes | Bundled demo fixture for fast smoke tests. |
-| ETT: `ETTh1`, `ETTh2`, `ETTm1`, `ETTm2` | placeholder | `hf_file` candidate | no | Candidate THUML source; source-ledger approval required before automatic download. |
+| ETT: `ETTh1`, `ETTh2`, `ETTm1`, `ETTm2` | supported | `https_file` | yes | Single-file THUML/Hugging Face downloads with pinned SHA-256 checksums; smoke configs are readiness checks, not benchmarks. |
 | Electricity/ECL, Weather, Traffic | placeholder | `hf_file` candidate | no | Common long-term datasets; no benchmark claims or bulk download. |
 | Exchange, ILI, Solar-Energy, PeMS | placeholder | candidate/manual | no | Documented because TSF papers use them; enable only after source/license review. |
 | Monash tourism monthly | placeholder | manual-only | no | Upstream terms must be checked manually. |
@@ -304,12 +308,12 @@ This repository stores **recipes, not large artifacts**.
 - No third-party datasets are redistributed.
 - No model weights or checkpoints are committed.
 - Dataset cache defaults to `.cache/tsf-paperkit/datasets/`.
-- Non-toy datasets must remain `placeholder` until `configs/dataset_sources.yaml` and `docs/dataset-sources.md` record source/license/provenance approval.
+- Non-toy datasets must remain `placeholder` until `configs/dataset_sources.yaml` and `docs/dataset-sources.md` record source/license/provenance approval. ETT is the first approved non-toy family.
 - Model cache defaults to `.cache/tsf-paperkit/models/`.
 - Environment overrides are supported with `TSF_PAPERKIT_DATA_CACHE` and `TSF_PAPERKIT_MODEL_CACHE`.
 - Restricted or authenticated sources should fail clearly until the user accepts upstream terms.
 
-The dataset registry includes the bundled `toy_series` plus placeholder recipes for common TSF datasets such as ETT, Electricity/ECL, Weather, Traffic, Exchange, ILI, Solar-Energy, PeMS, and Monash candidates. Placeholder recipes are metadata and provenance prompts, not hidden benchmark downloads.
+The dataset registry includes the bundled `toy_series`, supported ETT recipes, and placeholder recipes for common TSF datasets such as Electricity/ECL, Weather, Traffic, Exchange, ILI, Solar-Energy, PeMS, and Monash candidates. Placeholder recipes are metadata and provenance prompts, not hidden benchmark downloads.
 
 ---
 
