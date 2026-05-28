@@ -21,6 +21,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0", "ruff>=0.4"]
+patchtst = ["einops>=0.7"]
+research-adapters = ["einops>=0.7"]
+foundation-adapters = ["huggingface-hub>=0.23", "transformers>=4.40"]
+adapters = ["einops>=0.7", "huggingface-hub>=0.23", "transformers>=4.40"]
 
 [project.scripts]
 tsf-paperkit = "tsf_paperkit.cli:app"

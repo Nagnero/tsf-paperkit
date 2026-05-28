@@ -336,21 +336,26 @@ The dataset registry includes the bundled `toy_series`, supported ETT/Weather/Ex
 
 ## Adding a model
 
-1. Implement `BaseForecastModel` in `tsf_paperkit/models/`.
-2. Add an adapter key to `tsf_paperkit/models/registry.py`.
-3. Add metadata to `configs/model_registry.yaml`.
-4. Add a smoke config and regression test.
-5. If the model needs assets, use lazy cache logic and never commit weights.
+Runnable MVP models remain deliberately small: `naive`, `linear`, and `dlinear`. Advanced models are tracked as **future adapters** until their dependency, license, asset, and smoke-test story is clear.
 
-Future adapter TODOs:
+Adapter contract:
 
-- PatchTST
-- TimeMixer
-- AMD-style adaptive multi-scale decomposition
-- TimesFM
-- Chronos
-- Moirai
-- TiRex
+```text
+input:  batch, seq_len, channels
+output: batch, pred_len, channels
+```
+
+Promotion flow:
+
+1. Read `docs/model-adapters.md`.
+2. Keep new dependencies in optional extras such as `.[patchtst]`, `.[research-adapters]`, or `.[foundation-adapters]`.
+3. Implement `BaseForecastModel` only after source/revision/license/weight policy is recorded.
+4. Add the adapter key to `MODEL_CLASSES` only when it is runnable.
+5. Add metadata to `configs/model_registry.yaml`.
+6. Add a tiny CPU smoke test and a config before claiming support.
+7. Never commit weights, checkpoints, generated outputs, or downloaded model artifacts.
+
+Future adapter placeholders are already recorded for PatchTST, TimeMixer, AMD-style decomposition, TimesFM, Chronos, Moirai, and TiRex. `model prepare` reports these as planned/blocked instead of pretending they are runnable.
 
 ---
 

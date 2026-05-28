@@ -5,6 +5,7 @@ from typing import Any
 
 import yaml
 
+from tsf_paperkit.models.adapters import ADAPTER_SPECS
 from tsf_paperkit.models.assets import prepare_model_asset
 from tsf_paperkit.models.dlinear import DLinearForecastModel
 from tsf_paperkit.models.linear import LinearForecastModel
@@ -26,7 +27,14 @@ def load_model_registry(path: str | Path = "configs/model_registry.yaml") -> lis
 
 
 def list_models(path: str | Path = "configs/model_registry.yaml") -> list[dict[str, Any]]:
-    return load_model_registry(path)
+    recipes = []
+    for recipe in load_model_registry(path):
+        item = dict(recipe)
+        spec = ADAPTER_SPECS.get(str(item.get("adapter")))
+        if spec:
+            item.setdefault("adapter_contract", spec.as_dict())
+        recipes.append(item)
+    return recipes
 
 
 def model_recipe(name: str, path: str | Path = "configs/model_registry.yaml") -> dict[str, Any]:
@@ -45,6 +53,12 @@ def build_model(name: str, seq_len: int, pred_len: int, channels: int, device: s
     adapter = recipe.get("adapter")
     model_cls = MODEL_CLASSES.get(adapter)
     if model_cls is None:
+        spec = ADAPTER_SPECS.get(str(adapter))
+        if spec:
+            raise NotImplementedError(
+                f"Model {name!r} uses future adapter {adapter!r} ({spec.display_name}); "
+                f"it is documented but not runnable yet. See {recipe.get('docs', 'docs/model-adapters.md')}."
+            )
         raise KeyError(f"Model {name!r} uses adapter {adapter!r}, which is not implemented in the MVP registry.")
     if adapter == "builtin.naive":
         return model_cls()

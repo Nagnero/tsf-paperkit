@@ -1,5 +1,6 @@
 models:
   - name: naive
+    status: supported
     kind: builtin
     provider: tsf-paperkit
     revision: local
@@ -7,8 +8,10 @@ models:
     cache_key: null
     license_note: project license
     auth_required: false
+    optional_extra: null
     adapter: builtin.naive
   - name: linear
+    status: supported
     kind: builtin
     provider: tsf-paperkit
     revision: local
@@ -16,8 +19,10 @@ models:
     cache_key: null
     license_note: project license
     auth_required: false
+    optional_extra: null
     adapter: builtin.linear
   - name: dlinear
+    status: supported
     kind: builtin
     provider: tsf-paperkit
     revision: local
@@ -25,22 +30,89 @@ models:
     cache_key: null
     license_note: project license
     auth_required: false
+    optional_extra: null
     adapter: builtin.dlinear
+  - name: patchtst_future
+    status: planned
+    kind: future-adapter
+    provider: external
+    revision: TBD
+    expected_files: []
+    cache_key: patchtst_future
+    license_note: Future adapter TODO; review upstream code and paper license before implementation.
+    auth_required: false
+    optional_extra: patchtst
+    adapter: future.patchtst
+    docs: docs/model-adapters.md#patchtst
+  - name: timemixer_future
+    status: planned
+    kind: future-adapter
+    provider: external
+    revision: TBD
+    expected_files: []
+    cache_key: timemixer_future
+    license_note: Future adapter TODO; review upstream code and paper license before implementation.
+    auth_required: false
+    optional_extra: research-adapters
+    adapter: future.timemixer
+    docs: docs/model-adapters.md#timemixer
+  - name: amd_future
+    status: planned
+    kind: future-adapter
+    provider: external
+    revision: TBD
+    expected_files: []
+    cache_key: amd_future
+    license_note: Future adapter TODO; select and review exact AMD-style source before implementation.
+    auth_required: false
+    optional_extra: research-adapters
+    adapter: future.amd
+    docs: docs/model-adapters.md#amd-style-adaptive-multi-scale-decomposition
   - name: timesfm_future
+    status: planned-auth-or-license-review
     kind: future-adapter
     provider: external
     revision: TBD
     expected_files: []
     cache_key: timesfm_future
-    license_note: Future adapter TODO; user must follow upstream license.
+    license_note: Future adapter TODO; user must follow upstream license and weight access rules.
     auth_required: true
-    adapter: TODO TimesFM
+    optional_extra: foundation-adapters
+    adapter: future.timesfm
+    docs: docs/model-adapters.md#timesfm-style-foundation-model
   - name: chronos_future
+    status: planned-auth-or-license-review
     kind: future-adapter
     provider: external
     revision: TBD
     expected_files: []
     cache_key: chronos_future
-    license_note: Future adapter TODO; user must follow upstream license.
+    license_note: Future adapter TODO; user must follow upstream license and weight access rules.
     auth_required: true
-    adapter: TODO Chronos
+    optional_extra: foundation-adapters
+    adapter: future.chronos
+    docs: docs/model-adapters.md#chronos-style-foundation-model
+  - name: moirai_future
+    status: planned-auth-or-license-review
+    kind: future-adapter
+    provider: external
+    revision: TBD
+    expected_files: []
+    cache_key: moirai_future
+    license_note: Future adapter TODO; user must follow upstream license and weight access rules.
+    auth_required: true
+    optional_extra: foundation-adapters
+    adapter: future.moirai
+    docs: docs/model-adapters.md#moirai-style-foundation-model
+  - name: tirex_future
+    status: planned-auth-or-license-review
+    kind: future-adapter
+    provider: external
+    revision: TBD
+    expected_files: []
+    cache_key: tirex_future
+    license_note: Future adapter TODO; user must follow upstream license and weight access rules.
+    auth_required: true
+    optional_extra: foundation-adapters
+    adapter: future.tirex
+    docs: docs/model-adapters.md#tirex-style-foundation-model
